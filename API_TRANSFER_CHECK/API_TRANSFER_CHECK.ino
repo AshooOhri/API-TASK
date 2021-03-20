@@ -11,7 +11,7 @@ char pass[] = "password";
 int keyIndex = 0;               
 int status = WL_IDLE_STATUS;
 WiFiServer server(80);
-// define two tasks for Blink & AnalogRead
+// define two tasks for Store & Compare
 void TaskStore( void *pvParameters );
 void TaskCompare( void *pvParameters );
 
@@ -92,7 +92,7 @@ void setup()
   printWifiStatus();
 }
 
-// Main logic of your circuit. It defines the interaction between the components you selected. After setup, it runs over and over again, in an eternal loop.
+
 void loop() 
 {
     
@@ -104,17 +104,13 @@ void loop()
     if(menuOption == '1') {
     // Micro SD module - Test Code
     // The SD example code creates a datalog.txt file for logging sensor data
-    // open the file. note that only one file can be open at a time,
-    // so you have to close this one before opening another.
+    // open the file. 
     sdFile = SD.open("datalog.txt", FILE_WRITE);
     // if the file exists in SD card, write sensor data
     if (sdFile) {
-    //Write to file
     sdFile.println("ENTER SENSOR DATA HERE");
     // close the file
     sdFile.close();
-    // Uncomment to print to the serial port
-    //Serial.println("ENTER SENSOR DATA HERE");
     } 
     else {
     // if the file didn't open, print an error
@@ -159,16 +155,6 @@ char menu()
             return c;
         }
     }
-void serialEvent()
-{
- static char cmdBuffer[CMDBUFFER_SIZE] = "";
- char c;
- while(Serial.available())
- if (Serial.available())  {
-    char c = Serial.read();  //gets one byte from serial buffer
-    myFile.println(Serial.read);//puts data in sd card
-    }
-  }
 void TaskStore(void *pvParameters)  // This is a task.
 {
   (void) pvParameters;
